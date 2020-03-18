@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace Game
+[Serializable]
+public class LoadSceneData
 {
-    [Serializable]
-    public class LoadSceneData
-    {
-        public string Path = null;
-        public string GameName = null;
-    }
+    public string Path = null;
+    public string GameName = null;
 }
