@@ -113,7 +113,7 @@ namespace Game
         }
 
         private const string CMD_EXIT = "exit";
-        public static void SendExitCommandToRN()
+        public static void SendExitCommand()
         {
             CommonData data = new CommonData
             {
