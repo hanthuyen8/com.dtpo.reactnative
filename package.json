@@ -2,7 +2,7 @@
     "name": "com.dtpo.reactnative",
     "version": "0.1.3",
     "displayName": "React Native Communicate",
-    "description": "Hỗ trợ giao tiếp với React Native",
+    "description": "Hỗ trợ giao tiếp với React Native, https://github.com/hanthuyen8/com.dtpo.reactnative.git",
     "unity": "2019.3",
     "unityRelease": "3f1",
     "author": {
@@ -12,6 +12,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/hanthuyen8/com.dtpo.reactnative.git"
+        "url": "https://github.com/hanthuyen8/com.dtpo.reactnative.git#master"
     }
 }
