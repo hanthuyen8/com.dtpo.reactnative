@@ -1,3 +1,4 @@
+Link Git: https://github.com/hanthuyen8/com.dtpo.reactnative.git
 # Hướng dẫn cài đặt:
 - Bước 1: Xóa hết các file script cũ của JavascriptFunction + Newtonsoft JSON trước đây.
 - Bước 2: Mở Unity.
@@ -16,7 +17,7 @@
 
 *Lưu ý: Không cần tạo 1 GameObject trên Scene để sử dụng nữa. Các script bên trong package này sẽ tự xử lý.*
 
-1. Để gửi tín hiệu ghi âm đến ReactNative, gọi Method:
+**1. Để gửi tín hiệu ghi âm đến ReactNative, gọi Method:**
 ```
 ReactNative.RecordAudio(string keyWord, int second, Action<bool> onResult)
 ```
@@ -46,13 +47,13 @@ private void AudioResult(bool result)
     }
 }
 ```
-2. Để gửi điểm số đến React Native, gọi một trong ba Method sau:
+**2. Để gửi điểm số đến React Native, gọi một trong ba Method sau:**
 ```
 ReactNative.SendScore(SendScoreData scoreData)
 ReactNative.SendScore(SendScoreData[] scoreData)
 ReactNative.SendScore(List<SendScoreData> scoreData)
 ```
-3. Để thoát ra khỏi Unity (thoát game), gọi Method sau:
+**3. Để thoát ra khỏi Unity (thoát game), gọi Method sau:**
 ```
 ReactNative.SendExitCommand()
 ```

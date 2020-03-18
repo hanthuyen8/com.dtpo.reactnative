@@ -1,9 +1,7 @@
 {
-    "name": "Unity.reactnative.Editor",
+    "name": "dtpo.reactnative",
     "references": [],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
