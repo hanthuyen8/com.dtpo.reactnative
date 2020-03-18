@@ -73,5 +73,5 @@ crashlytics-build.properties
 !/Assets/Plugins/Sirenix/Demos/*.unitypackage 
 
 # Scene
-*.unityscene
+*.unity
 /Runtime/SampleScript.cs
