@@ -304,6 +304,7 @@ public static class XcodePostBuild
 
     private static void EditCodeFile(string path, Func<string, IEnumerable<string>> lineHandler)
     {
+        _isWrittenToFiles = true;
         Debug.Log("Đang ghi file: " + path);
         var bakPath = path + ".bak";
         if (File.Exists(bakPath))
