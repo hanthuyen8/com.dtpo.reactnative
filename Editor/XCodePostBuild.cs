@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEngine;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 
@@ -299,7 +300,7 @@ public static class XcodePostBuild
 
     private static void EditCodeFile(string path, Func<string, IEnumerable<string>> lineHandler)
     {
-        Console.WriteLine("Đang ghi file: " + path);
+        Debug.Log("Đang ghi file: " + path);
         bool isWritten = false;
         var bakPath = path + ".bak";
         if (File.Exists(bakPath))
