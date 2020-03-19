@@ -4,7 +4,7 @@ using System;
 public class RecordAudioData
 {
     [JsonProperty("action")]
-    public const string Action = "sendRecord";
+    public string Action = "sendRecord";
 
     [JsonProperty("data")]
     public Data RecordData;
