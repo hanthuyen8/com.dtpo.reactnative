@@ -299,6 +299,7 @@ public static class XcodePostBuild
 
     private static void EditCodeFile(string path, Func<string, IEnumerable<string>> lineHandler)
     {
+        bool isWritten = false;
         var bakPath = path + ".bak";
         if (File.Exists(bakPath))
         {
@@ -317,10 +318,14 @@ public static class XcodePostBuild
                 var outputs = lineHandler(line);
                 foreach (var o in outputs)
                 {
+                    isWritten = true;
                     writer.WriteLine(o);
                 }
             }
         }
+
+        if (!isWritten)
+            throw new Exception("Lỗi: Không thể ghi vào file " + path);
     }
 }
 

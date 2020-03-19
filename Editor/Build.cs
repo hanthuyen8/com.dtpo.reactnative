@@ -40,6 +40,8 @@ public class Build : MonoBehaviour {
             Directory.Delete(androidExportPath, true);
         }
 
+        PlayerSettings();
+
         EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
 
         var options = BuildOptions.AcceptExternalModificationsToPlayer;
@@ -80,10 +82,14 @@ public class Build : MonoBehaviour {
     }
 
     [MenuItem("ReactNative/Export IOS (Unity 2019.3.*) %&i", false, 3)]
-    public static void DoBuildIOS() {
-        if (Directory.Exists(iosExportPath)) {
+    public static void DoBuildIOS()
+    {
+        if (Directory.Exists(iosExportPath))
+        {
             Directory.Delete(iosExportPath, true);
         }
+
+        PlayerSettings();
 
         EditorUserBuildSettings.iOSBuildConfigType = iOSBuildType.Release;
 
@@ -95,12 +101,20 @@ public class Build : MonoBehaviour {
             options
         );
 
-        if (report.summary.result != BuildResult.Succeeded) {
+        if (report.summary.result != BuildResult.Succeeded)
+        {
             throw new Exception("Build failed");
         }
 
         Debug.Log("Đã build xong, link: " + iosExportPath);
         System.Diagnostics.Process.Start("explorer.exe", iosExportPath);
+    }
+
+    private static void PlayerSettings()
+    {
+        UnityEditor.PlayerSettings.iOS.microphoneUsageDescription = "We need to record your pronunciation";
+        UnityEditor.PlayerSettings.allowedAutorotateToPortrait = false;
+        UnityEditor.PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
     }
 
     static void Copy(string source, string destinationPath) 
