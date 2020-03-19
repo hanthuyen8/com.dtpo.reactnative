@@ -1,6 +1,6 @@
 {
     "name": "com.dtpo.reactnative",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "displayName": "React Native Communicate",
     "description": "Hỗ trợ giao tiếp với React Native, https://github.com/hanthuyen8/com.dtpo.reactnative.git",
     "unity": "2019.3",
