@@ -31,6 +31,7 @@ using UnityEditor.iOS.Xcode;
 public static class XcodePostBuild
 {
     private const string TouchedMarker = "https://github.com/asmadsen/react-native-unity-view";
+    private static bool _isWrittenToFiles = false;
 
     [PostProcessBuild]
     public static void OnPostBuild(BuildTarget target, string pathToBuiltProject)
@@ -43,6 +44,9 @@ public static class XcodePostBuild
         PatchUnityNativeCode(pathToBuiltProject);
 
         UpdateUnityProjectFiles(pathToBuiltProject);
+
+        if (!_isWrittenToFiles)
+            throw new Exception("Build iOS chưa hoàn tất, project chưa thể sử dụng được");
     }
 
     private static void UpdateUnityProjectFiles(string pathToBuiltProject)
@@ -301,7 +305,6 @@ public static class XcodePostBuild
     private static void EditCodeFile(string path, Func<string, IEnumerable<string>> lineHandler)
     {
         Debug.Log("Đang ghi file: " + path);
-        bool isWritten = false;
         var bakPath = path + ".bak";
         if (File.Exists(bakPath))
         {
@@ -320,14 +323,10 @@ public static class XcodePostBuild
                 var outputs = lineHandler(line);
                 foreach (var o in outputs)
                 {
-                    isWritten = true;
                     writer.WriteLine(o);
                 }
             }
         }
-
-        if (!isWritten)
-            throw new Exception("Lỗi: Không thể ghi vào file " + path);
     }
 }
 
