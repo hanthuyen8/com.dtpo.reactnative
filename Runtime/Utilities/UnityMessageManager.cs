@@ -72,7 +72,7 @@ public class UnityMessageManager : MonoBehaviour
 
     private static int generateId()
     {
-        ID++;
+        ID = ID + 1;
         return ID;
     }
 
@@ -93,16 +93,25 @@ public class UnityMessageManager : MonoBehaviour
         Instance = go.AddComponent<UnityMessageManager>();
     }
 
+    void Awake()
+    {
+    }
+
     public void SendMessageToRN(string message)
     {
-        #if UNITY_ANDROID && !UNITY_EDITOR
-        using (AndroidJavaClass jc = new AndroidJavaClass("no.asmadsen.unity.view.UnityUtils"))
+        if (Application.platform == RuntimePlatform.Android)
         {
-            jc.CallStatic("onUnityMessage", message);
+            using (AndroidJavaClass jc = new AndroidJavaClass("no.asmadsen.unity.view.UnityUtils"))
+            {
+                jc.CallStatic("onUnityMessage", message);
+            }
         }
-        #elif UNITY_IOS && !UNITY_EDITOR
-        onUnityMessage(message);
-        #endif
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+#if UNITY_IOS && !UNITY_EDITOR
+            onUnityMessage(message);
+#endif
+        }
     }
 
     public void SendMessageToRN(UnityMessage message)
@@ -125,7 +134,10 @@ public class UnityMessageManager : MonoBehaviour
 
     void onMessage(string message)
     {
-        OnMessage?.Invoke(message);
+        if (OnMessage != null)
+        {
+            OnMessage(message);
+        }
     }
 
     void onRNMessage(string message)
@@ -143,14 +155,21 @@ public class UnityMessageManager : MonoBehaviour
         if ("end".Equals(handler.seq))
         {
             // handle callback message
-            if (waitCallbackMessageMap.TryGetValue(handler.id, out UnityMessage m))
+            UnityMessage m;
+            if (waitCallbackMessageMap.TryGetValue(handler.id, out m))
             {
                 waitCallbackMessageMap.Remove(handler.id);
-                m.callBack?.Invoke(handler.getData<object>()); // todo
+                if (m.callBack != null)
+                {
+                    m.callBack(handler.getData<object>()); // todo
+                }
             }
             return;
         }
 
-        OnRNMessage?.Invoke(handler);
+        if (OnRNMessage != null)
+        {
+            OnRNMessage(handler);
+        }
     }
 }

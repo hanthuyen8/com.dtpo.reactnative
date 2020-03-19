@@ -1,7 +1,7 @@
 Link Git: https://github.com/hanthuyen8/com.dtpo.reactnative.git
 # Hướng dẫn cài đặt:
 - Bước 1: Xóa hết các file script cũ của JavascriptFunction + Newtonsoft JSON trước đây.
-- Bước 2: Mở Unity.
+- Bước 2: Mở Unity 2019.3 (bắt buộc)
 - Bước 3: Chọn Window > Package Manager
 
 ![Chọn Window > Package Manager](https://lh3.googleusercontent.com/7YO2ShqtmtqVCLHLX4qB9M2VcoIfccMOPZffYpX5M0tOmzCqCNV8ox15adEMY_A4XFS8Rre0-PSoM3eu9q1A95brh_vHB3O9_5vMGYRe1WA2BLLVC56StHumVQc73oe866_Yb0W1Kg=w2400)

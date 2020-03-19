@@ -37,12 +37,14 @@ public class ReactNative : MonoBehaviour
 
     #region Gửi Message cho React
 
+    #region Score
     /// <summary>
     /// Gửi điểm cho React Native
     /// </summary>
     public static void SendScore(SendScoreData scoreData)
     {
         string json = JsonConvert.SerializeObject(scoreData);
+        Debug.Log(json);
         UnityMessageManager.Instance.SendMessageToRN(json);
     }
 
@@ -52,6 +54,7 @@ public class ReactNative : MonoBehaviour
     public static void SendScore(SendScoreData[] scoreData)
     {
         string json = JsonConvert.SerializeObject(scoreData);
+        Debug.Log(json);
         UnityMessageManager.Instance.SendMessageToRN(json);
     }
 
@@ -61,9 +64,12 @@ public class ReactNative : MonoBehaviour
     public static void SendScore(List<SendScoreData> scoreData)
     {
         string json = JsonConvert.SerializeObject(scoreData);
+        Debug.Log(json);
         UnityMessageManager.Instance.SendMessageToRN(json);
     }
+    #endregion
 
+    #region Record
     private const string RECORD_AUDIO_NULL_ACTION = "Phải truyền vào hàm xử lý kết quả trả về của ghi âm";
     private const string RECORD_AUDIO_EMPTY_KEYWORD = "keyWord không được rỗng";
     private const string RECORD_AUDIO_SECOND_IS_ZERO = "second phải lớn hơn 0";
@@ -99,6 +105,7 @@ public class ReactNative : MonoBehaviour
         else
             _onResultAudio?.Invoke(false);
     }
+    #endregion
 
     private const string CMD_EXIT = "exit";
     public static void SendExitCommand()

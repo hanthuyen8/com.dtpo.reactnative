@@ -10,19 +10,19 @@ using BuildResult = UnityEditor.Build.Reporting.BuildResult;
 public class Build : MonoBehaviour {
     static readonly string ProjectPath = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
 
-    static readonly string apkPath = Path.Combine(ProjectPath, "Builds/" + Application.productName + ".apk");
+    static readonly string apkPath = Path.Combine(ProjectPath, "Builds", Application.productName + ".apk");
 
     private static readonly string androidExportPath =
-        Path.GetFullPath(Path.Combine(ProjectPath, "UnityExport/android/UnityExport"));
+        Path.GetFullPath(Path.Combine(ProjectPath, "UnityExport", "android", "UnityExport"));
 
     private static readonly string iosExportPath =
-        Path.GetFullPath(Path.Combine(ProjectPath, "UnityExport/ios/UnityExport"));
+        Path.GetFullPath(Path.Combine(ProjectPath, "UnityExport", "ios", "UnityExport"));
 
     [MenuItem("ReactNative/Export Android (Unity 2019.3.*) %&n", false, 1)]
     public static void DoBuildAndroidLibrary() {
         DoBuildAndroid(Path.Combine(apkPath, "unityLibrary"));
 
-        Copy(Path.Combine(apkPath, "launcher/src/main/res"), Path.Combine(androidExportPath, "src/main/res"));
+        Copy(Path.Combine(apkPath, "launcher", "src", "main", "res"), Path.Combine(androidExportPath, "src", "main", "res"));
     }
 
     [MenuItem("ReactNative/Export Android legacy %&a", false, 2)]
@@ -68,7 +68,7 @@ public class Build : MonoBehaviour {
         File.WriteAllText(build_file, build_text);
 
         // Modify AndroidManifest.xml
-        var manifest_file = Path.Combine(androidExportPath, "src/main/AndroidManifest.xml");
+        var manifest_file = Path.Combine(androidExportPath, "src", "main", "AndroidManifest.xml");
         var manifest_text = File.ReadAllText(manifest_file);
         manifest_text = Regex.Replace(manifest_text, @"<application .*>", "<application>");
         Regex regex = new Regex(@"<activity.*>(\s|\S)+?</activity>", RegexOptions.Multiline);

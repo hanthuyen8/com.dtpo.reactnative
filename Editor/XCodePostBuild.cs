@@ -47,7 +47,7 @@ public static class XcodePostBuild
     private static void UpdateUnityProjectFiles(string pathToBuiltProject)
     {
         var pbx = new PBXProject();
-        var pbxPath = Path.Combine(pathToBuiltProject, "Unity-iPhone.xcodeproj/project.pbxproj");
+        var pbxPath = Path.Combine(pathToBuiltProject, "Unity-iPhone.xcodeproj", "project.pbxproj");
         pbx.ReadFromFile(pbxPath);
 
         var targetGuid = pbx.TargetGuidByName("UnityFramework");
@@ -59,10 +59,10 @@ public static class XcodePostBuild
 
     private static void PatchUnityNativeCode(string pathToBuiltProject)
     {
-        EditUnityFrameworkH(Path.Combine(pathToBuiltProject, "UnityFramework/UnityFramework.h"));
-        EditUnityAppControllerH(Path.Combine(pathToBuiltProject, "Classes/UnityAppController.h"));
-        EditUnityAppControllerMM(Path.Combine(pathToBuiltProject, "Classes/UnityAppController.mm"));
-        EditUnityViewMM(Path.Combine(pathToBuiltProject, "Classes/UI/UnityView.mm"));
+        EditUnityFrameworkH(Path.Combine(pathToBuiltProject, "UnityFramework", "UnityFramework.h"));
+        EditUnityAppControllerH(Path.Combine(pathToBuiltProject, "Classes", "UnityAppController.h"));
+        EditUnityAppControllerMM(Path.Combine(pathToBuiltProject, "Classes", "UnityAppController.mm"));
+        EditUnityViewMM(Path.Combine(pathToBuiltProject, "Classes", "UI", "UnityView.mm"));
     }
 
     private static void EditUnityFrameworkH(string path)
