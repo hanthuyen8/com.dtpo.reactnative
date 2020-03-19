@@ -7,7 +7,8 @@ using UnityEngine;
 using Application = UnityEngine.Application;
 using BuildResult = UnityEditor.Build.Reporting.BuildResult;
 
-public class Build : MonoBehaviour {
+public class Build : MonoBehaviour
+{
     static readonly string ProjectPath = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
 
     static readonly string apkPath = Path.Combine(ProjectPath, "Builds", Application.productName + ".apk");
@@ -19,24 +20,29 @@ public class Build : MonoBehaviour {
         Path.GetFullPath(Path.Combine(ProjectPath, "UnityExport", "ios", "UnityExport"));
 
     [MenuItem("ReactNative/Export Android (Unity 2019.3.*) %&n", false, 1)]
-    public static void DoBuildAndroidLibrary() {
+    public static void DoBuildAndroidLibrary()
+    {
         DoBuildAndroid(Path.Combine(apkPath, "unityLibrary"));
 
         Copy(Path.Combine(apkPath, "launcher", "src", "main", "res"), Path.Combine(androidExportPath, "src", "main", "res"));
     }
 
     [MenuItem("ReactNative/Export Android legacy %&a", false, 2)]
-    public static void DoBuildAndroidLegacy() {
+    public static void DoBuildAndroidLegacy()
+    {
         DoBuildAndroid(Path.Combine(apkPath, Application.productName));
         Debug.Log("Đã build xong, link: " + androidExportPath);
         System.Diagnostics.Process.Start("explorer.exe", androidExportPath);
     }
 
-    public static void DoBuildAndroid(String buildPath) {
-        if (Directory.Exists(apkPath)) {
+    public static void DoBuildAndroid(String buildPath)
+    {
+        if (Directory.Exists(apkPath))
+        {
             Directory.Delete(apkPath, true);
         }
-        if (Directory.Exists(androidExportPath)) {
+        if (Directory.Exists(androidExportPath))
+        {
             Directory.Delete(androidExportPath, true);
         }
 
@@ -52,7 +58,8 @@ public class Build : MonoBehaviour {
             options
         );
 
-        if (report.summary.result != BuildResult.Succeeded) {
+        if (report.summary.result != BuildResult.Succeeded)
+        {
             throw new Exception("Build failed");
         }
 
@@ -117,7 +124,7 @@ public class Build : MonoBehaviour {
         UnityEditor.PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
     }
 
-    static void Copy(string source, string destinationPath) 
+    static void Copy(string source, string destinationPath)
     {
         if (Directory.Exists(destinationPath))
             Directory.Delete(destinationPath, true);
@@ -136,7 +143,8 @@ public class Build : MonoBehaviour {
         }
     }
 
-    static string[] GetEnabledScenes() {
+    static string[] GetEnabledScenes()
+    {
         var scenes = EditorBuildSettings.scenes
             .Where(s => s.enabled)
             .Select(s => s.path)
