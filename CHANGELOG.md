@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.5] - 2020-03-19
 ### Added
-- 
+- Thêm vào script Simulation: tính năng giả lập trả về cho ResultAudio(true/false)
 
 ### Changed
 - 

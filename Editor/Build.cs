@@ -23,11 +23,10 @@ public class Build : MonoBehaviour
 	public static void DoBuildAndroidLibrary()
 	{
 		DoBuildAndroid(Path.Combine(apkPath, "unityLibrary"));
-
 		Copy(Path.Combine(apkPath, "launcher", "src", "main", "res"), Path.Combine(androidExportPath, "src", "main", "res"));
 	}
 
-	[MenuItem("ReactNative/Export Android legacy %&a", false, 2)]
+	//[MenuItem("ReactNative/Export Android legacy %&a", false, 2)]
 	public static void DoBuildAndroidLegacy()
 	{
 		DoBuildAndroid(Path.Combine(apkPath, Application.productName));
@@ -46,7 +45,7 @@ public class Build : MonoBehaviour
 			Directory.Delete(androidExportPath, true);
 		}
 
-		PlayerSettings();
+		EditPlayerSettings();
 
 		EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
 
@@ -96,7 +95,7 @@ public class Build : MonoBehaviour
 			Directory.Delete(iosExportPath, true);
 		}
 
-		PlayerSettings();
+		EditPlayerSettings();
 
 		EditorUserBuildSettings.iOSBuildConfigType = iOSBuildType.Release;
 
@@ -117,11 +116,13 @@ public class Build : MonoBehaviour
 		System.Diagnostics.Process.Start("explorer.exe", iosExportPath);
 	}
 
-	private static void PlayerSettings()
+	private static void EditPlayerSettings()
 	{
-		UnityEditor.PlayerSettings.iOS.microphoneUsageDescription = "We need to record your pronunciation";
-		UnityEditor.PlayerSettings.allowedAutorotateToPortrait = false;
-		UnityEditor.PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+		PlayerSettings.iOS.microphoneUsageDescription = "We need to record your pronunciation";
+		PlayerSettings.allowedAutorotateToPortrait = false;
+		PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+		PlayerSettings.muteOtherAudioSources = true;
+		PlayerSettings.SetPropertyInt("Prepare IOS For Recording", 1, BuildTarget.iOS);
 	}
 
 	static void Copy(string source, string destinationPath)
@@ -136,8 +137,7 @@ public class Build : MonoBehaviour
 			Directory.CreateDirectory(dirPath.Replace(source, destinationPath));
 		}
 
-		foreach (string newPath in Directory.GetFiles(source, "*.*",
-			SearchOption.AllDirectories))
+		foreach (string newPath in Directory.GetFiles(source, "*.*", SearchOption.AllDirectories))
 		{
 			File.Copy(newPath, newPath.Replace(source, destinationPath), true);
 		}

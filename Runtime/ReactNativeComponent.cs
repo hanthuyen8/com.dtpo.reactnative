@@ -104,6 +104,8 @@ public class ReactNative : MonoBehaviour
             _onResultAudio?.Invoke(true);
         else
             _onResultAudio?.Invoke(false);
+
+        _onResultAudio = null;
     }
     #endregion
 
