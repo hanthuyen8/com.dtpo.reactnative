@@ -3,6 +3,7 @@ using UnityEngine.Assertions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
 public class ReactNative : MonoBehaviour
@@ -14,6 +15,11 @@ public class ReactNative : MonoBehaviour
      "info"  : Thông báo đơn thuần cho React Native. - Kèm data: string
      "exit"  : Player muốn thoát game.
          */
+
+#if UNITY_WEBGL
+    [DllImport("__Internal")]
+    private static extern void SendWebRequest(string json);
+#endif
 
     public static ReactNative Instance { get; private set; }
     private const string GAMEOBJECT_NAME = "ReactNative";
@@ -44,8 +50,7 @@ public class ReactNative : MonoBehaviour
     public static void SendScore(SendScoreData scoreData)
     {
         string json = JsonConvert.SerializeObject(scoreData);
-        Debug.Log(json);
-        UnityMessageManager.Instance.SendMessageToRN(json);
+        Send(json);
     }
 
     /// <summary>
@@ -54,8 +59,7 @@ public class ReactNative : MonoBehaviour
     public static void SendScore(SendScoreData[] scoreData)
     {
         string json = JsonConvert.SerializeObject(scoreData);
-        Debug.Log(json);
-        UnityMessageManager.Instance.SendMessageToRN(json);
+        Send(json);
     }
 
     /// <summary>
@@ -64,8 +68,7 @@ public class ReactNative : MonoBehaviour
     public static void SendScore(List<SendScoreData> scoreData)
     {
         string json = JsonConvert.SerializeObject(scoreData);
-        Debug.Log(json);
-        UnityMessageManager.Instance.SendMessageToRN(json);
+        Send(json);
     }
     #endregion
 
@@ -92,8 +95,7 @@ public class ReactNative : MonoBehaviour
             WavUtility.FromAudioClip(clip, out string path, true);
 
             RecordAudioData recordData = new RecordAudioData(keyWord, path);
-            Debug.Log(recordData.ToString());
-            UnityMessageManager.Instance.SendMessageToRN(recordData.ToString());
+            Send(recordData.ToString());
         }
     }
 
@@ -101,6 +103,16 @@ public class ReactNative : MonoBehaviour
     public void ResultAudio(string result)
     {
         if (result == RESULT_AUDIO_CORRECT)
+            _onResultAudio?.Invoke(true);
+        else
+            _onResultAudio?.Invoke(false);
+
+        _onResultAudio = null;
+    }
+
+    public void ResultAudio(int result)
+    {
+        if (result == 1)
             _onResultAudio?.Invoke(true);
         else
             _onResultAudio?.Invoke(false);
@@ -119,9 +131,27 @@ public class ReactNative : MonoBehaviour
         };
 
         string json = JsonConvert.SerializeObject(data);
-        UnityMessageManager.Instance.SendMessageToRN(json);
+        Send(json);
     }
 
     #endregion
+
+    private static void Send(string json)
+    {
+#if UNITY_EDITOR || UNITY_STANDALONE
+        Debug.Log(json);
+        return;
+#endif
+
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+        UnityMessageManager.Instance.SendMessageToRN(json);
+        return;
+#endif
+
+#if UNITY_WEBGL
+        SendWebRequest(json);
+        return;
+#endif
+    }
 
 }// class
