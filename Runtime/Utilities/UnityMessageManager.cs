@@ -93,17 +93,18 @@ public class UnityMessageManager : MonoBehaviour
         Instance = go.AddComponent<UnityMessageManager>();
     }
 
-    void Awake()
-    {
-    }
-
     public void SendMessageToRN(string message)
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            using (AndroidJavaClass jc = new AndroidJavaClass("no.asmadsen.unity.view.UnityUtils"))
+            try
             {
+                AndroidJavaClass jc = new AndroidJavaClass("no.asmadsen.unity.view.UnityUtils");
                 jc.CallStatic("onUnityMessage", message);
+            }
+            catch(AndroidJavaException e)
+            {
+                Debug.Log(e.Message);
             }
         }
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
